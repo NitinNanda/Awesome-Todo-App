@@ -1,3 +1,4 @@
+import Vue from 'vue'
 const state = { // data will go here
   tasks: {
     'ID1': {
@@ -22,11 +23,22 @@ const state = { // data will go here
 }
 
 const mutations = { // synchronous
-
+  updateTask(state, payload){
+    console.log('payload from mutations: ', payload);
+    Object.assign(state.tasks[payload.id], payload.updates)
+  },
+  deleteTask(state, id){
+    Vue.delete(state.tasks, id)
+  }
 }
 
 const actions = { // could be asynchronous
-
+  updateTask({ commit }, payload){
+    commit('updateTask', payload)
+  },
+  deleteTask({commit}, id){
+    commit('deleteTask', id)
+  }
 }
 
 const getters = { // methods and components in the app will access the data in the state through these getters
