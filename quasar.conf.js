@@ -89,7 +89,9 @@ module.exports = function (/* ctx */) {
       all: 'auto',
 
       components: [],
-      directives: [],
+      directives: [
+        'ClosePopup'
+      ],
 
       // Quasar plugins
       plugins: [
