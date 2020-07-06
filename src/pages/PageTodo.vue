@@ -1,16 +1,12 @@
 <template>
   <q-page class="q-pa-md">
-    <q-list 
-    v-if="Object.keys(tasks).length"
-    separator
-    bordered>
-    <task
-    v-for="(task, key) in tasks"
-      :key="task.id"
-      :task="task"
-      :id="key"
-    ></task>
-    </q-list>
+    <tasks-todo
+    :tasksTodo="tasksTodo"
+    />
+    <hr>
+    <tasks-completed
+    :tasksCompleted="tasksCompleted"
+    />
     <div class="absolute-bottom text-center q-mb-lg">
       <q-btn
       @click="showAddTask = true"
@@ -36,11 +32,12 @@ import { mapGetters } from 'vuex'
       }
     },
     computed: {
-      ...mapGetters('tasks', ['tasks'])
+      ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted'])
     },
     components: {
-      'task' : require('components/Tasks/Task.vue').default,
-      'add-task' : require('components/Modals/AddTask.vue').default
+      'add-task' : require('components/Modals/AddTask.vue').default,
+      'tasks-todo' : require('components/Tasks/TasksTodo.vue').default,
+      'tasks-completed': require('components/Tasks/CompletedTasks.vue').default
     }
   }
 </script>
