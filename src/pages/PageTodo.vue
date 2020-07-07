@@ -1,10 +1,15 @@
 <template>
   <q-page class="q-pa-md">
+    <no-tasks 
+    v-if="!Object.keys(tasksTodo).length"/>
+
     <tasks-todo
+    v-else
     :tasksTodo="tasksTodo"
     />
-    <hr>
+    
     <tasks-completed
+    v-if="Object.keys(tasksCompleted).length"
     :tasksCompleted="tasksCompleted"
     />
     <div class="absolute-bottom text-center q-mb-lg">
@@ -37,7 +42,13 @@ import { mapGetters } from 'vuex'
     components: {
       'add-task' : require('components/Modals/AddTask.vue').default,
       'tasks-todo' : require('components/Tasks/TasksTodo.vue').default,
-      'tasks-completed': require('components/Tasks/CompletedTasks.vue').default
+      'tasks-completed': require('components/Tasks/CompletedTasks.vue').default,
+      'no-tasks' : require('components/Tasks/Notasks.vue').default
+    },
+    mounted() {
+      this.$root.$on('showAddTask', () => {
+        this.showAddTask = true
+      })
     }
   }
 </script>

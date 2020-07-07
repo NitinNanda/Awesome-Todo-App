@@ -1,8 +1,8 @@
 <template>
 <div>
-  <list-header>Todo</list-header>
+  <list-header
+  bgColor="bg-orange-4">Todo</list-header>
   <q-list 
-    v-if="Object.keys(tasksTodo).length"
     separator
     bordered>
     <task
@@ -19,7 +19,7 @@ export default {
   props:['tasksTodo'],
   components: {
     'task' : require('components/Tasks/Task.vue').default,
-    'list-header' : require('components/Shared/ListHeader.vue').default
+    'list-header' : require('components/Shared/ListHeader.vue').default   
   }
 }
 </script>
