@@ -21,7 +21,8 @@ const state = { // data will go here
       dueDate: '2020/07/14',
       dueTime: '14:30'
     }
-  }
+  },
+  search: ''
 }
 
 const mutations = { // synchronous
@@ -34,6 +35,9 @@ const mutations = { // synchronous
   },
   addTask(state, payload){
     Vue.set(state.tasks, payload.id, payload.task)
+  },
+  setSearch(state, value){
+    state.search = value
   }
 }
 
@@ -51,24 +55,45 @@ const actions = { // could be asynchronous
       task : task 
     }
     commit('addTask', payload)
+  },
+  setSearch({commit}, value) {
+    commit('setSearch', value)
   }
 }
 
 const getters = { // methods and components in the app will access the data in the state through these getters
-  tasksTodo: (state) => {
+  tasksFiltered: (state) => {
+    let tasksFiltered = {}
+    if(state.search){
+      // populate empty object
+      Object.keys(state.tasks).forEach(function(key){
+        let task = state.tasks[key],
+          taskNameLowerCase = task.name.toLowerCase(),
+          searchLowerCase = state.search.toLowerCase()
+        if(taskNameLowerCase.includes(searchLowerCase)){
+          tasksFiltered[key] = task
+        }
+      })
+      return tasksFiltered
+    }
+    return state.tasks
+  },
+  tasksTodo: (state, getters) => {
+    let tasksFiltered = getters.tasksFiltered
     let tasks = {}
-    Object.keys(state.tasks).forEach(function(key){
-      let task = state.tasks[key]
+    Object.keys(tasksFiltered).forEach(function(key){
+      let task = tasksFiltered[key]
       if(!task.completed){
         tasks[key] = task
       }
     })
     return tasks
   },
-  tasksCompleted: (state) => {
+  tasksCompleted: (state, getters) => {
+    let tasksFiltered = getters.tasksFiltered
     let tasks = {}
-    Object.keys(state.tasks).forEach(function(key){
-      let task = state.tasks[key]
+    Object.keys(tasksFiltered).forEach(function(key){
+      let task = tasksFiltered[key]
       if(task.completed){
         tasks[key] = task
       }
