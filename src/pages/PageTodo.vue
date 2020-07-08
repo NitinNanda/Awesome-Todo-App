@@ -1,8 +1,9 @@
 <template>
   <q-page class="q-pa-md">
-    <search
-    class="q-mb-lg"
-    />
+    <div class="row q-mb-lg">
+      <search/>
+      <sort/>
+    </div>
     <p v-if="search && !Object.keys(tasksTodo).length && !Object.keys('tasksCompleted')">No search results</p>
     <no-tasks 
     v-if="!Object.keys(tasksTodo).length && !search"/>
@@ -49,7 +50,8 @@ import { mapGetters, mapState } from 'vuex'
       'tasks-todo' : require('components/Tasks/TasksTodo.vue').default,
       'tasks-completed': require('components/Tasks/CompletedTasks.vue').default,
       'no-tasks' : require('components/Tasks/Notasks.vue').default,
-      'search' : require('components/Tasks/Tools/Search.vue').default
+      'search' : require('components/Tasks/Tools/Search.vue').default,
+      'sort' : require('components/Tasks/Tools/Sort.vue').default
     },
     mounted() {
       this.$root.$on('showAddTask', () => {
