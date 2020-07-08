@@ -2,6 +2,7 @@
   <q-item 
       @click="updateTask({id : id, updates: {completed: !task.completed }})"
       :class="!task.completed ?  'bg-orange-1' :' bg-green-1'"
+      v-touch-hold:1000.mouse="showEditTaskModal"
       clickable
       v-ripple>
         <q-item-section side top>
@@ -10,8 +11,9 @@
 
         <q-item-section>
           <q-item-label
-          :class="{'text-strikethrough': task.completed}">
-            {{task.name}}
+          :class="{'text-strikethrough': task.completed}"
+          v-html="$options.filters.searchHighLight(task.name, search)">
+            
           </q-item-label>
         </q-item-section>
         <q-item-section 
@@ -28,7 +30,7 @@
             <q-item-label 
             class="row justify-end"
             caption>
-              {{ task.dueDate }}
+              {{ task.dueDate | niceDate}}
             </q-item-label>
             <q-item-label 
             class="row justify-end"
@@ -41,7 +43,7 @@
         <q-item-section side>
           <div class="row">
             <q-btn
-              @click.stop="showEditTask = true"
+              @click.stop="showEditTaskModal"
               flat
               round
               dense
@@ -57,7 +59,7 @@
           </div>
         </q-item-section>
         <q-dialog v-model="showEditTask">
-            <edit-task @close="showEditTask = false"
+            <edit-task @close="showEditTaskModal"
             :task="task"
             :id="id"
             />
@@ -65,7 +67,8 @@
       </q-item>
 </template>
 <script>
-  import {mapActions} from 'vuex'
+  import { mapState, mapActions} from 'vuex'
+  import { date } from 'quasar'
 
   export default{
     props: ['task','id'],
@@ -74,8 +77,14 @@
         showEditTask: false
       }
     },
+    computed: {
+      ...mapState('tasks', ['search'])
+    },
     methods: {
       ...mapActions('tasks', ['updateTask', 'deleteTask']),
+      showEditTaskModal() {
+        this.showEditTask = true
+      },
       promptToDelete(id) {
           this.$q.dialog({
             title: 'Confirm',
@@ -89,6 +98,20 @@
     },
     components: {
       'edit-task': require('components/Modals/EditTask.vue').default
+    },
+    filters: {
+      niceDate(value) {
+        return date.formatDate(value, 'MMM D')
+      },
+      searchHighLight(value, search) {
+        if(search){
+          let searchRegexp = new RegExp(search, 'ig')
+          return value.replace(searchRegexp, (match) => {
+            return '<span class="bg-yellow-6">' + match + '</span>'
+          })
+        }
+        return value
+      }
     }
   }
 

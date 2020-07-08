@@ -6,15 +6,21 @@
             :value="name" 
             label="Task name" 
             @input="$emit('update:name', $event)"
-            autofocus=""
+            autofocus
             class="col"
             ref="name"
+            v-select-all
             :rules="[val => !!val || 'Field is required']"
              />
   </div>
 </template>
 <script>
+import { selectAll } from 'src/directives/directive-select-all'
+
 export default {
-  props: ['name']
+  props: ['name'],
+  directives: {
+    selectAll
+  }
 }
 </script>
