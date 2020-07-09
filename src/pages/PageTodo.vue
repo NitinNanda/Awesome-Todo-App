@@ -1,30 +1,37 @@
 <template>
-  <q-page class="q-pa-md">
-    <div class="row q-mb-lg">
-      <search/>
-      <sort/>
-    </div>
-    <p v-if="search && !Object.keys(tasksTodo).length && !Object.keys('tasksCompleted')">No search results</p>
-    <no-tasks 
-    v-if="!Object.keys(tasksTodo).length && !search"/>
+  <q-page>
+    <div class="q-pa-md absolute full-width full-height column">
+      <div class="row q-mb-lg">
+        <search/>
+        <sort/>
+      </div>
+      <p v-if="search && !Object.keys(tasksTodo).length && !Object.keys('tasksCompleted')">No search results</p>
 
-    <tasks-todo
-    v-if="Object.keys(tasksTodo).length"
-    :tasksTodo="tasksTodo"
-    />
-    
-    <tasks-completed
-    v-if="Object.keys(tasksCompleted).length"
-    :tasksCompleted="tasksCompleted"
-    />
-    <div class="absolute-bottom text-center q-mb-lg">
-      <q-btn
-      @click="showAddTask = true"
-      round
-      color="primary"
-      size="20px"
-      icon="add"
-    />
+      <q-scroll-area class="q-scroll-area-tasks">
+        <no-tasks 
+        v-if="!Object.keys(tasksTodo).length && !search"/>
+
+        <tasks-todo
+        v-if="Object.keys(tasksTodo).length"
+        :tasksTodo="tasksTodo"
+        />
+        
+        <tasks-completed
+        v-if="Object.keys(tasksCompleted).length"
+        :tasksCompleted="tasksCompleted"
+        class="q-mb-xl"
+        />
+      </q-scroll-area>
+      <div class="absolute-bottom text-center q-mb-lg no-pointer-events">
+        <q-btn
+        @click="showAddTask = true"
+        round
+        color="primary"
+        size="20px"
+        icon="add"
+        class="all-pointer-events"
+      />
+      </div>
     </div>
      <q-dialog v-model="showAddTask">
       <add-task @close="showAddTask = false"/>
@@ -61,5 +68,8 @@ import { mapGetters, mapState } from 'vuex'
   }
 </script>
 <style>
-
+.q-scroll-area-tasks {
+  display: flex;
+  flex-grow: 1;
+}
 </style>
