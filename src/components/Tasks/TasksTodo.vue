@@ -17,7 +17,7 @@
           :task="task"
           :id="key"
         ></task>
-        </q-list>
+      </q-list>
     </div>
   </transition>
 </template>
