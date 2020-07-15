@@ -20,3 +20,16 @@ quasar build
 
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+
+
+### Firebase DB rules
+{
+  "rules": {
+    "tasks":{
+      "$uId": {
+        ".read": "auth.uid == $uId",
+        ".write": "auth.uid == $uId"
+      }
+    }
+  }
+}
