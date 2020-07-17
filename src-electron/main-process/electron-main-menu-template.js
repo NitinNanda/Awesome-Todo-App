@@ -1,4 +1,5 @@
 import { app } from 'electron'
+import { mainWindow } from './electron-main'
 
 const isMac = process.platform === 'darwin'
 
@@ -10,8 +11,9 @@ export const template = [
       { role: 'about' },
       { 
         label: 'Settings',
+        accelerator: 'CmdOrCtrl+,',
         click() {
-          
+          mainWindow.webContents.send('show-Settings')
         }
       },
       { type: 'separator' },

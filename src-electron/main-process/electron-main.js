@@ -1,4 +1,4 @@
-import { app, BrowserWindow, nativeTheme, Menu } from 'electron'
+import { app, BrowserWindow, nativeTheme, Menu, ipcMain } from 'electron'
 import { template } from './electron-main-menu-template'
 
 try {
@@ -18,7 +18,7 @@ if (process.env.PROD) {
 /*
  Variables and costants
 */
-let mainWindow
+export let mainWindow
 const menu = Menu.buildFromTemplate(template)
 /*
 App ready 
@@ -51,5 +51,11 @@ App events
 */
 
 app.on('window-all-closed', () => {
-    app.quit()
+  app.quit()
+})
+/*
+ipc events
+*/
+ipcMain.on('quit-app', () => {
+  app.quit()
 })
