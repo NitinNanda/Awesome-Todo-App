@@ -12,10 +12,13 @@ npm install
 quasar dev
 ```
 
+### Build the app in dev mode
+quasar dev -m electron
 
 ### Build the app for production
 ```bash
 quasar build
+quasar build -m electron
 ```
 
 ### Customize the configuration
