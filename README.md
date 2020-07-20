@@ -12,8 +12,12 @@ npm install
 quasar dev
 ```
 
+
 ### Build the app in dev mode for android
 quasar dev -m cordova -T android
+
+### Build the app in dev mode
+quasar dev -m electron
 
 
 ### Build the app for production- android
@@ -28,6 +32,7 @@ quasar dev -m cordova -T android
 ### Build the app for production- web
 ```bash
 quasar build
+quasar build -m electron
 ```
 
 ### Customize the configuration
