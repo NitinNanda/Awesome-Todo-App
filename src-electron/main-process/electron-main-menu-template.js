@@ -11,7 +11,7 @@ export const template = [
       { role: 'about' },
       { 
         label: 'Settings',
-        accelerator: 'CmdOrCtrl+,',
+        accelerator: 'CmdOrCtrl',
         click() {
           mainWindow.webContents.send('show-Settings')
         }

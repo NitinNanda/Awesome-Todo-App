@@ -12,8 +12,20 @@ npm install
 quasar dev
 ```
 
+### Build the app in dev mode for android
+quasar dev -m cordova -T android
 
-### Build the app for production
+
+### Build the app for production- android
+- Build for production with quasar build -m cordova -T android
+
+- Plug in your android device
+
+- cd into src-cordova folder
+
+- run on device with cordova run android
+
+### Build the app for production- web
 ```bash
 quasar build
 ```
