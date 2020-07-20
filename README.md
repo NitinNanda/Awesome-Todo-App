@@ -1,3 +1,5 @@
+Use app-debug.apk as a production android app
+
 # Quasar App (awesome-todo)
 
 A Quasar Framework app
